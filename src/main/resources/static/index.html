@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yorkie Simple Connection Test</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/yorkie-js-sdk@0.5.7/dist/yorkie-js-sdk.js"></script>
+</head>
+<body>
+<h2>Yorkie Connection Test</h2>
+<div id="status">연결 시도 중...</div>
+
+<script>
+    async function testConnection() {
+        try {
+            const client = new yorkie.Client('http://localhost:11101');
+            document.getElementById('status').textContent = '클라이언트 생성됨';
+
+            await client.activate();
+            document.getElementById('status').textContent = '연결 성공! Client ID: ' + client.getID();
+
+        } catch (error) {
+            document.getElementById('status').textContent = '연결 실패: ' + error.message;
+            console.error('Yorkie 연결 에러:', error);
+        }
+    }
+
+    testConnection();
+</script>
+</body>
+</html>

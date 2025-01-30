@@ -4,6 +4,11 @@
 
 ### 2. Web IDE 개발
 
+#### ✅ [2-2] Yorkie Client Connection
+
+- Yorkie Server와 커넥션을 확인
+
+
 #### ✅ [2-1] Yorkie 서버 구성
 
 - Docker-compose를 통해 서버 구성
