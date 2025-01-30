@@ -1,0 +1,37 @@
+services:
+  yorkie:
+    image: yorkieteam/yorkie:latest
+    container_name: yorkie_dev
+    ports:
+      - "${YORKIE_PORT:-11101}:8080"  # 기본 포트를 11101로 변경
+      - "${YORKIE_ADMIN_PORT:-11102}:8081"  # 관리자 포트를 11102로 변경
+    environment:
+      - YORKIE_MONGO_URI=${MONGO_URI}
+      - YORKIE_MONGO_DB_NAME=${MONGO_DB_NAME}
+    depends_on:
+      - mongodb
+    command: server
+    networks:
+      - yorkie_dev_network
+
+  mongodb:
+    image: mongo:latest
+    container_name: yorkie_mongodb_dev
+    ports:
+      - "${MONGO_PORT:-11103}:27017"  # MongoDB 포트를 11103으로 변경
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - yorkie_dev_network
+
+networks:
+  yorkie_dev_network:
+    driver: bridge
+
+volumes:
+  mongodb_dev_data:
+    driver: local
