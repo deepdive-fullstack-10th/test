@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collaborative Editor</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/yorkie-js-sdk@0.5.7/dist/yorkie-js-sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
+    <link href="../css/editor.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="room-info">
+    <h2>Room: <span id="roomIdDisplay"></span></h2>
+    <div class="language-selector" hidden="hidden">
+        <select id="languageSelect">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+        </select>
+    </div>
+    <div id="status">연결 시도 중...</div>
+    <div id="clients">연결된 클라이언트: </div>
+</div>
+<div id="editor-container"></div>
+
+<script type="module">
+    import { CollaborativeIDE } from '../js/app.js';
+
+    // URL에서 언어 정보 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const language = urlParams.get('language') || 'javascript';
+
+    // 언어 선택 UI 초기값 설정
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.value = language;
+
+    // 애플리케이션 시작
+    const app = new CollaborativeIDE();
+    app.initialize();
+
+    // 언어 변경 이벤트 처리
+    languageSelect.addEventListener('change', (event) => {
+        const newLanguage = event.target.value;
+        app.editorManager.setLanguage(newLanguage);
+    });
+</script>
+</body>
+</html>

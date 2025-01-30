@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Main Page</title>
+    <title>Collaborative IDE</title>
     <meta charset="UTF-8">
-    <style>
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-        }
-        .input-group {
-            margin: 15px 0;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h2>Collaborative Editor Room</h2>
+    <h2>Collaborative IDE</h2>
     <div class="input-group">
         <label>방 ID:</label>
-        <input type="text" id="roomId" placeholder="새로운 방 ID를 입력하거나 기존 방 ID를 입력하세요">
+        <input type="text" id="roomId" placeholder="방 ID를 입력하세요">
+    </div>
+    <div class="input-group">
+        <label>언어 선택:</label>
+        <select id="language">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+        </select>
     </div>
     <button onclick="enterRoom()">입장하기</button>
 </div>
@@ -43,12 +26,14 @@
 <script>
     function enterRoom() {
         const roomId = document.getElementById('roomId').value.trim();
+        const language = document.getElementById('language').value;
+
         if (!roomId) {
             alert('방 ID를 입력해주세요!');
             return;
         }
-        // editor.html로 이동하면서 roomId를 쿼리 파라미터로 전달
-        window.location.href = `editor/editor.html?roomId=${encodeURIComponent(roomId)}`;
+
+        window.location.href = `editor/index.html?roomId=${encodeURIComponent(roomId)}&language=${encodeURIComponent(language)}`;
     }
 </script>
 </body>
