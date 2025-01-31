@@ -2,6 +2,16 @@
 
 ---
 
+### 3. Yorkie 학습
+
+#### ✅ [3-1] Yorkie Document 따라하기
+
+- 기존 Web IDE 개발 학습 시 문제점
+    - AI를 활용한 개발을 했음.
+    - AI가 최신 Yorkie 정보를 가지고 있지 않음.
+- Yorkie Docs 기반 최신 문서를 기준으로 학습 가능
+- [Yorkie - Getting Started](https://yorkie.dev/docs/getting-started/with-js-sdk) 을 이해해보자.
+
 ### 2. Web IDE 개발
 
 #### ✅ [2-5] 사용자 별 Tab 적용
