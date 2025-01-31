@@ -1,5 +1,5 @@
+// js/managers/YorkieManager.js
 export class YorkieManager {
-
     constructor(serverUrl) {
         this.serverUrl = serverUrl;
         this.client = null;
@@ -11,6 +11,7 @@ export class YorkieManager {
             this.client = new yorkie.Client(this.serverUrl);
             await this.client.activate();
 
+            // 문서 키에 언어 정보 포함
             const docKey = `${roomId}-${language}`;
             this.doc = new yorkie.Document(docKey);
 
@@ -18,17 +19,8 @@ export class YorkieManager {
             await this.client.attach(this.doc, {
                 initialPresence: {
                     clientId: this.client.getID(),
-                    status: 'active'
-                }
-            });
-
-            // 초기 presence 동기화를 위한 지연
-            await new Promise(resolve => setTimeout(resolve, 100));
-
-            // 문서 초기화
-            this.doc.update((root) => {
-                if (!root.content) {
-                    root.content = new yorkie.Text();
+                    userName: `User ${Math.floor(Math.random() * 1000)}`, // 임시 사용자 이름
+                    color: '#' + Math.floor(Math.random()*16777215).toString(16) // 임시 색상
                 }
             });
 
@@ -43,28 +35,40 @@ export class YorkieManager {
     }
 
     onDocumentChange(callback) {
-        this.doc.subscribe(callback);
-    }
-
-    updateDocument(content) {
-        this.doc.update((root) => {
-            if (root.content) {
-                root.content.edit(0, root.content.length, content);
-            }
-        });
-    }
-
-    getPresences() {
-        const presences = this.doc.getPresences();
-        console.log('Current presences:', presences); // 디버깅용
-        return presences;
+        if (this.doc) {
+            this.doc.subscribe(callback);
+        }
     }
 
     onPresenceChange(callback) {
-        this.doc.subscribe('presence', (event) => {
-            console.log('Presence event:', event); // 디버깅용
-            callback(this.getPresences());
-        });
+        if (this.doc) {
+            this.doc.subscribe('presence', (event) => {
+                if (event.type !== 'presence-changed') {
+                    callback(this.getPresences());
+                }
+            });
+        }
+    }
+
+    updateDocument(content) {
+        if (this.doc) {
+            this.doc.update((root) => {
+                if (!root.content) {
+                    root.content = new yorkie.Text();
+                }
+                root.content.edit(0, root.content.length, content);
+            });
+        }
+    }
+
+    getPresences() {
+        if (!this.doc) return [];
+        const presences = this.doc.getPresences();
+        return Array.from(presences).map(presence => ({
+            clientId: presence.clientID,
+            userName: presence.presence.userName || presence.clientID,
+            color: presence.presence.color || '#000000'
+        }));
     }
 
     async cleanup() {
