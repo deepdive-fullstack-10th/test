@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collaborative Editor</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/yorkie-js-sdk@0.5.7/dist/yorkie-js-sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
+    <link href="../css/editor.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="room-info">
+    <h2>Room: <span id="roomIdDisplay"></span></h2>
+    <div class="language-selector">
+        <label>Language:</label>
+        <select id="languageSelect"></select>
+    </div>
+    <div id="status">연결 시도 중...</div>
+</div>
+<div id="tabs-container"></div>
+<div class="content-wrapper">
+    <div id="editor-container"></div>
+    <div class="clients-panel">
+        <h3>Connected Clients</h3>
+        <div id="clients"></div>
+    </div>
+</div>
+
+<script type="module">
+    import { CollaborativeIDE } from '../js/app.js';
+
+    const app = new CollaborativeIDE();
+    app.initialize();
+</script>
+</body>
+</html>
