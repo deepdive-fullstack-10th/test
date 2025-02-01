@@ -4,6 +4,12 @@
 
 ### 3. Yorkie 학습
 
+#### ✅ [3-2] Yorkie 추가 정보 정리하기
+
+- [Yorkie 기술 정리](./yorkie/NOTE.md)에 내가 이해한 내용을 정리
+- [Yorkie docs](https://yorkie.dev/docs/js-sdk)에 상세한 내용
+- 3-1 이해 후 3-2를 이해해야된다.
+
 #### ✅ [3-1] Yorkie Document 따라하기
 
 - 기존 Web IDE 개발 학습 시 문제점
