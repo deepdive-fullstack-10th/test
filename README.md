@@ -2,6 +2,22 @@
 
 ---
 
+### 3. Yorkie 학습
+
+#### ✅ [3-2] Yorkie 추가 정보 정리하기
+
+- [Yorkie 기술 정리](./yorkie/NOTE.md)에 내가 이해한 내용을 정리
+- [Yorkie docs](https://yorkie.dev/docs/js-sdk)에 상세한 내용
+- 3-1 이해 후 3-2를 이해해야된다.
+
+#### ✅ [3-1] Yorkie Document 따라하기
+
+- 기존 Web IDE 개발 학습 시 문제점
+    - AI를 활용한 개발을 했음.
+    - AI가 최신 Yorkie 정보를 가지고 있지 않음.
+- Yorkie Docs 기반 최신 문서를 기준으로 학습 가능
+- [Yorkie - Getting Started](https://yorkie.dev/docs/getting-started/with-js-sdk) 을 이해해보자.
+
 ### 2. Web IDE 개발
 
 #### ✅ [2-5] 사용자 별 Tab 적용
