@@ -12,20 +12,19 @@
 
 - google Oauth와 Kakao Oauth를 추가한다.
 
-#### ✅ [4-3] Client Side Oauth로 전환
+#### ✅ [4-3] Refactoring
+
+- 재사용성을 고려해서 리팩토링을 진행한다.
+
+#### ✅ [4-2] Client Side Oauth 연동
 
 - static 폴더의 login.html로 oauth 로그인 페이지를 만든다.
   - 깃헙 로그인을 생성한다.
-- front에서 oauth code를 받아서 server에서 로그인해본다.
-- 로그인이 완료되었다면 로그인 된 사용자의 이메일 및 닉네임을 반환한다.
-
-#### ✅ [4-2] Oauth 연동
-
-- Security Login Form으로 Oauth 로그인이 되는지 확인한다.
-  - Server Side Oauth
-  - Oauth 정보로 회원 가입
-  - Oauth 정보로 회원 가입된 이메일과 닉네임을 간단히 리스트 업
-- 다른 Oauth에 대한 정보도 처리할 수 있도록 책임을 분리한다.
+  - front에서 oauth code를 받는다.
+  - server에서 로그인해본다.
+- Client Side 방식으로 으로 Oauth 로그인이 되는지 확인한다.
+  - OAuth Code 정보로 로그인 요청
+  - 회원가입 완료되었다는 응답만 추가
 
 #### ✅ [4-1] User 엔티티 생성
 

@@ -15,3 +15,11 @@ spring:
       hibernate:
         format_sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: true
+
+oauth:
+  github:
+    client-id: Ov23li13h2e0fXX4Ivzd
+    redirect-uri: "http://localhost:8080/login.html"
+    client-secret: c099ca7f5f168514c866ca58c667f9d5947afb70
+    scope: user:email, read:user
