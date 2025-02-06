@@ -1,5 +1,6 @@
-package org.learn.auth.client;
+package org.learn.auth.client.github;
 
+import org.learn.auth.client.RestClientGenerator;
 import org.learn.auth.dto.TokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

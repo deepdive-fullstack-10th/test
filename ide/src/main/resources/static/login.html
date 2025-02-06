@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Login</title>
+    <title>소셜 로그인</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,65 +20,70 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 300px;
         }
-        .github-button {
-            background-color: #24292e;
-            color: white;
-            border: none;
+        .social-button {
+            width: 100%;
             padding: 12px 24px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            margin: 10px 0;
+            border: none;
+        }
+        .github-button {
+            background-color: #24292e;
+            color: white;
         }
         .github-button:hover {
             background-color: #2f363d;
+        }
+        .kakao-button {
+            background-color: #FEE500;
+            color: #000000;
+        }
+        .kakao-button:hover {
+            background-color: #F4DC00;
+        }
+        .button-text {
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 <div class="login-container">
     <h2>로그인</h2>
-    <button onclick="handleGithubLogin()" class="github-button">
-        <svg height="24" viewBox="0 0 16 16" width="24" fill="white">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+    <button onclick="handleGithubLogin()" class="social-button github-button">
+        <svg height="20" viewBox="0 0 16 16" width="20" fill="white">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
         </svg>
-        GitHub으로 로그인
+        <span class="button-text">GitHub으로 계속하기</span>
+    </button>
+    <button onclick="handleKakaoLogin()" class="social-button kakao-button">
+        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 36C70.562 36 24 72.713 24 118.629c0 29.482 19.167 55.395 48.115 70.013-2.197 8.176-8.004 29.854-8.171 31.676-.207 2.262 0.852 2.262 1.79 1.529 0.74-0.615 29.377-19.977 41.445-28.132 6.763 1.001 13.728 1.543 20.821 1.543 57.438 0 104-36.713 104-82.629S185.438 36 128 36z"/>
+        </svg>
+        <span class="button-text">카카오로 계속하기</span>
     </button>
 </div>
 
 <script>
     const GITHUB_CLIENT_ID = 'Ov23li13h2e0fXX4Ivzd';
-    const BACKEND_URL = 'http://localhost:8080';
+    const KAKAO_CLIENT_ID = '636379da8a0126dd5bed25977e8cdafb';
+    const LOCAL_URL = 'http://localhost:8080';
 
     function handleGithubLogin() {
-        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
+        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${LOCAL_URL}/github.html`;
         window.location.href = githubAuthUrl;
     }
 
-    // GitHub 콜백 처리
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    console.log(code);
-    if (code) {
-        console.log('인증 코드:', code);
-        fetch(`${BACKEND_URL}/auth/oauth-login?oauthCode=${code}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ oauthCode: code })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('로그인 성공:', data);
-            })
-            .catch(error => {
-                console.error('로그인 실패:', error);
-                alert('로그인에 실패했습니다.');
-            });
+    function handleKakaoLogin() {
+        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${LOCAL_URL}/kakao.html`;
+        window.location.href = kakaoAuthUrl;
     }
 </script>
 </body>

@@ -8,9 +8,13 @@
 - H2 DB, JPA, Security를 활용해서 학습을 진행한다.
 - 깃헙 Oauth를 연동한다.
 
-#### ✅ [4-4] Google 및 카카오 데이터 추가
+#### ✅ [4-5] 구글 OAuth 추가
 
-- google Oauth와 Kakao Oauth를 추가한다.
+- Google OAuth 정보를 추가한다.
+
+#### ✅ [4-4] 카카오 OAuth 추가
+
+- Kakao OAuth 정보를 추가한다.
 
 #### ✅ [4-3] Refactoring
 

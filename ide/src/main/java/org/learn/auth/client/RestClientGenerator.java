@@ -32,4 +32,23 @@ public class RestClientGenerator {
                 .build();
     }
 
+    public RestClient generateKakaoAuthClient() {
+        return RestClient.builder()
+                .requestFactory(requestFactory)
+                .messageConverters(converters -> {
+                    converters.add(new FormHttpMessageConverter());
+                    converters.add(new MappingJackson2HttpMessageConverter());
+                })
+                .baseUrl("https://kauth.kakao.com")
+                .build();
+    }
+
+    public RestClient generateKakaoApiClient() {
+        return RestClient.builder()
+                .requestFactory(requestFactory)
+                .messageConverters(converters -> converters.add(new MappingJackson2HttpMessageConverter()))
+                .baseUrl("https://kapi.kakao.com")
+                .build();
+    }
+
 }

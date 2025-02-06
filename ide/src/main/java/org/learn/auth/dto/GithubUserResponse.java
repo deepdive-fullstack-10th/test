@@ -2,15 +2,6 @@ package org.learn.auth.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Getter;
 
-@Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class GithubUserResponse {
-
-    private String id;
-    private String login;
-    private String name;
-    private String email;
-
-}
+public record GithubUserResponse(String id, String login) { }

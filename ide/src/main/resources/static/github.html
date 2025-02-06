@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소셜 로그인</title>
+</head>
+<body>
+
+<h2>깃허브 로그인 확인</h2>
+
+<script>
+    const LOCAL_URL = 'http://localhost:8080';
+    const currentPath = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const provider = currentPath.includes('github') ? 'github' : 'kakao';
+    const endpoint = `${LOCAL_URL}/auth/${provider}/oauth-login`;
+
+    console.log("github code: ", code);
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ oauthCode: code })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('로그인 성공:', data);
+    })
+    .catch(error => {
+        console.error('로그인 실패:', error);
+        alert('로그인에 실패했습니다.');
+    });
+</script>
+</body>
+</html>

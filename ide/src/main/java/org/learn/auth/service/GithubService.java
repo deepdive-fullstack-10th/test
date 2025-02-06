@@ -3,10 +3,11 @@ package org.learn.auth.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.learn.auth.UserAuthRepository;
-import org.learn.auth.client.GithubApiClient;
-import org.learn.auth.client.GithubClient;
+import org.learn.auth.client.github.GithubApiClient;
+import org.learn.auth.client.github.GithubClient;
 import org.learn.auth.domain.OAuth2Provider;
 import org.learn.auth.domain.UserAuth;
+import org.learn.auth.dto.AuthResponse;
 import org.learn.auth.dto.GithubUserResponse;
 import org.learn.auth.dto.TokenResponse;
 import org.learn.users.User;
@@ -23,18 +24,20 @@ public class GithubService {
     private final GithubClient githubClient;
     private final GithubApiClient githubApiClient;
 
-    public UserAuth singUpAndLogin(String oauthCode) {
+    public AuthResponse singUpAndLogin(String oauthCode) {
         TokenResponse tokenResponse = githubClient.getAccessToken(oauthCode);
-        GithubUserResponse githubUser = githubApiClient.getUser(tokenResponse.accessToken());
+        GithubUserResponse githubUser = githubApiClient.getUser(tokenResponse);
 
-        return findOrSignUp(githubUser);
+        UserAuth userAuth = findOrSignUp(githubUser);
+
+        return new AuthResponse("TOKEN", userAuth.getUser().getNickname(), userAuth.getOAuth2Provider());
     }
 
     private UserAuth findOrSignUp(GithubUserResponse githubUser) {
-        String providerId = "GITHUB_" + githubUser.getId();
+        String providerId = "GITHUB_" + githubUser.id();
 
         return userAuthRepository.findById(providerId).orElseGet(() -> {
-            User user = User.createUser(githubUser.getLogin());
+            User user = User.createUser(githubUser.login());
             UserAuth userAuth = UserAuth.signUp(providerId, user, OAuth2Provider.GITHUB);
             return userAuthRepository.save(userAuth);
         });

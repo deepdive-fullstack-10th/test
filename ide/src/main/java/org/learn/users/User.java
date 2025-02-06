@@ -23,7 +23,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false, length = 10)
     private String nickname;
 
     @Column(nullable = false)
@@ -35,7 +35,10 @@ public class User {
     }
 
     public static User createUser(String nickname) {
-        return new User(nickname.substring(0, 8));
+        if (nickname.length() > 10) {
+            return new User(nickname.substring(0, 10));
+        }
+        return new User(nickname);
     }
 
 }

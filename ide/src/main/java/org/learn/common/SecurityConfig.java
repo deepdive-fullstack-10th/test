@@ -27,6 +27,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/h2-console/**",
                                 "/login.html",
+                                "/github.html",
+                                "/kakao.html",
                                 "/auth/**",
                                 "/favicon.ico"
                         ).permitAll()
