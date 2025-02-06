@@ -8,7 +8,7 @@ import lombok.Getter;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GithubUserResponse {
 
-    private Long id;
+    private String id;
     private String login;
     private String name;
     private String email;

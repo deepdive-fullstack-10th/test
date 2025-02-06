@@ -65,16 +65,15 @@
     if (code) {
         console.log('인증 코드:', code);
         fetch(`${BACKEND_URL}/auth/oauth-login?oauthCode=${code}`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify({ oauthCode: code })
         })
             .then(response => response.json())
             .then(data => {
                 console.log('로그인 성공:', data);
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('nickname', data.nickname);
             })
             .catch(error => {
                 console.error('로그인 실패:', error);
