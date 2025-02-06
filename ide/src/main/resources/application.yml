@@ -24,3 +24,7 @@ oauth:
   kakao:
     client-id: 636379da8a0126dd5bed25977e8cdafb
     client-secret: ${KAKAO_SECRET}
+  google:
+    client-id: 528956748173-0q3lhssavils8fadlbgd65sbnphqff49.apps.googleusercontent.com
+    client-secret: ${GOOGLE_SECRET}
+    redirect-uri: http://localhost:8080/google.html

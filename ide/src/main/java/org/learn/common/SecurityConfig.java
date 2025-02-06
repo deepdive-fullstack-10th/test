@@ -29,6 +29,7 @@ public class SecurityConfig {
                                 "/login.html",
                                 "/github.html",
                                 "/kakao.html",
+                                "/google.html",
                                 "/auth/**",
                                 "/favicon.ico"
                         ).permitAll()

@@ -51,4 +51,23 @@ public class RestClientGenerator {
                 .build();
     }
 
+    public RestClient generateGoogleAuthClient() {
+        return RestClient.builder()
+                .requestFactory(requestFactory)
+                .messageConverters(converters -> {
+                    converters.add(new FormHttpMessageConverter());
+                    converters.add(new MappingJackson2HttpMessageConverter());
+                })
+                .baseUrl("https://oauth2.googleapis.com")
+                .build();
+    }
+
+    public RestClient generateGoogleApiClient() {
+        return RestClient.builder()
+                .requestFactory(requestFactory)
+                .messageConverters(converters -> converters.add(new MappingJackson2HttpMessageConverter()))
+                .baseUrl("https://www.googleapis.com")
+                .build();
+    }
+
 }

@@ -1,27 +1,27 @@
-package org.learn.auth.client.kakao;
+package org.learn.auth.client.google;
 
 import org.learn.auth.client.RestClientGenerator;
-import org.learn.auth.dto.KakaoUserResponse;
+import org.learn.auth.dto.GoogleUserResponse;
 import org.learn.auth.dto.TokenResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Component
-public class KakaoApiClient {
+public class GoogleApiClient {
 
     private final RestClient apiClient;
 
-    public KakaoApiClient(RestClientGenerator generator) {
-        this.apiClient = generator.generateKakaoApiClient();
+    public GoogleApiClient(RestClientGenerator generator) {
+        this.apiClient = generator.generateGoogleApiClient();
     }
 
-    public KakaoUserResponse getUser(TokenResponse tokenResponse) {
+    public GoogleUserResponse getUser(TokenResponse tokenResponse) {
         return apiClient.get()
-                .uri("/v2/user/me")
+                .uri("/oauth2/v3/userinfo")
                 .header(HttpHeaders.AUTHORIZATION, tokenResponse.getToken())
                 .retrieve()
-                .body(KakaoUserResponse.class);
+                .body(GoogleUserResponse.class);
     }
 
 }

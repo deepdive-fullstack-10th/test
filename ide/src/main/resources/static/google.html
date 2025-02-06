@@ -7,15 +7,15 @@
 </head>
 <body>
 
-<h2>깃허브 로그인 확인</h2>
+<h2>구글 로그인 확인</h2>
 
 <script>
     const LOCAL_URL = 'http://localhost:8080';
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    const endpoint = `${LOCAL_URL}/auth/github/oauth-login`;
+    const endpoint = `${LOCAL_URL}/auth/google/oauth-login`;
 
-    console.log("github code: ", code);
+    console.log("google code: ", code);
 
     fetch(endpoint, {
         method: 'POST',
@@ -24,14 +24,14 @@
         },
         body: JSON.stringify({ oauthCode: code })
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('로그인 성공:', data);
-    })
-    .catch(error => {
-        console.error('로그인 실패:', error);
-        alert('로그인에 실패했습니다.');
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('로그인 성공:', data);
+        })
+        .catch(error => {
+            console.error('로그인 실패:', error);
+            alert('로그인에 실패했습니다.');
+        });
 </script>
 </body>
 </html>

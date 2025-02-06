@@ -24,7 +24,6 @@ public class GithubClient {
         this.clientSecret = clientSecret;
     }
 
-
     public TokenResponse getAccessToken(String code) {
         String requestBody = String.format("client_id=%s&client_secret=%s&code=%s", clientId, clientSecret, code);
 
