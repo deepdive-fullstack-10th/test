@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "/kakao.html",
                                 "/google.html",
                                 "/auth/**",
+                                "/users/**",
                                 "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated())
@@ -48,4 +49,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }

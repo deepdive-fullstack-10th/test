@@ -7,7 +7,6 @@ import org.learn.auth.client.google.GoogleApiClient;
 import org.learn.auth.client.google.GoogleClient;
 import org.learn.auth.domain.OAuth2Provider;
 import org.learn.auth.domain.UserAuth;
-import org.learn.auth.dto.AuthResponse;
 import org.learn.auth.dto.GoogleUserResponse;
 import org.learn.auth.dto.TokenResponse;
 import org.learn.users.User;
@@ -24,13 +23,12 @@ public class GoogleService {
     private final GoogleClient googleClient;
     private final GoogleApiClient googleApiClient;
 
-    public AuthResponse signUpAndLogin(String code) {
+    public Long signUpAndLogin(String code) {
         TokenResponse tokenResponse = googleClient.getAccessToken(code);
         GoogleUserResponse googleUser = googleApiClient.getUser(tokenResponse);
 
         UserAuth userAuth = findOrSignUp(googleUser);
-
-        return new AuthResponse("TOKEN", userAuth.getUser().getNickname(), userAuth.getOAuth2Provider());
+        return userAuth.getUser().getId();
     }
 
     private UserAuth findOrSignUp(GoogleUserResponse googleUser) {

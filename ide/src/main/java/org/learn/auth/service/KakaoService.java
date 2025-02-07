@@ -7,7 +7,6 @@ import org.learn.auth.client.kakao.KakaoApiClient;
 import org.learn.auth.client.kakao.KakaoClient;
 import org.learn.auth.domain.OAuth2Provider;
 import org.learn.auth.domain.UserAuth;
-import org.learn.auth.dto.AuthResponse;
 import org.learn.auth.dto.KakaoUserResponse;
 import org.learn.auth.dto.TokenResponse;
 import org.learn.users.User;
@@ -24,13 +23,13 @@ public class KakaoService {
     private final KakaoClient kakaoClient;
     private final KakaoApiClient kakaoApiClient;
 
-    public AuthResponse signUpAndLogin(String code) {
+    public Long signUpAndLogin(String code) {
         TokenResponse tokenResponse = kakaoClient.getAccessToken(code);
         KakaoUserResponse kakaoUser = kakaoApiClient.getUser(tokenResponse);
 
         UserAuth userAuth = findOrSignUp(kakaoUser);
 
-        return new AuthResponse("TOKEN", userAuth.getUser().getNickname(), userAuth.getOAuth2Provider());
+        return userAuth.getUser().getId();
     }
 
     private UserAuth findOrSignUp(KakaoUserResponse kakaoUser) {

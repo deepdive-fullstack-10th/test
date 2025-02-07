@@ -8,6 +8,12 @@
 - H2 DB, JPA, Security를 활용해서 학습을 진행한다.
 - 깃헙 Oauth를 연동한다.
 
+#### ✅ [4-6] jwt 발급
+
+- 사용자 ID를 기준으로 Jwt token을 발급한다.
+- accessToken과 refreshToken을 발급
+- 사용자 id로 로그인한 사용자 조회
+
 #### ✅ [4-5] 구글 OAuth 추가
 
 - Google OAuth 정보를 추가한다.

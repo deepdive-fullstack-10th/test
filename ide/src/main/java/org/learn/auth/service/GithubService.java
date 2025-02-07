@@ -7,7 +7,6 @@ import org.learn.auth.client.github.GithubApiClient;
 import org.learn.auth.client.github.GithubClient;
 import org.learn.auth.domain.OAuth2Provider;
 import org.learn.auth.domain.UserAuth;
-import org.learn.auth.dto.AuthResponse;
 import org.learn.auth.dto.GithubUserResponse;
 import org.learn.auth.dto.TokenResponse;
 import org.learn.users.User;
@@ -24,13 +23,12 @@ public class GithubService {
     private final GithubClient githubClient;
     private final GithubApiClient githubApiClient;
 
-    public AuthResponse singUpAndLogin(String oauthCode) {
+    public Long singUpAndLogin(String oauthCode) {
         TokenResponse tokenResponse = githubClient.getAccessToken(oauthCode);
         GithubUserResponse githubUser = githubApiClient.getUser(tokenResponse);
 
         UserAuth userAuth = findOrSignUp(githubUser);
-
-        return new AuthResponse("TOKEN", userAuth.getUser().getNickname(), userAuth.getOAuth2Provider());
+        return userAuth.getUser().getId();
     }
 
     private UserAuth findOrSignUp(GithubUserResponse githubUser) {
