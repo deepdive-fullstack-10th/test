@@ -27,18 +27,20 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
+                .addFilterBefore(new AnonymousUserFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
                                 "/h2-console/**",
                                 "/login.html",
                                 "/github.html",
                                 "/kakao.html",
                                 "/google.html",
+                                "/userList.html",
                                 "/auth/**",
                                 "/users/**",
                                 "/favicon.ico"
                         ).permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated()
+                )
                 .build();
     }
 

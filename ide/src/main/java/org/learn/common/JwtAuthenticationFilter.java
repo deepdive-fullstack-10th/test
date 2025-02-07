@@ -1,5 +1,6 @@
 package org.learn.common;
 
+import static org.learn.common.SecurityPathConfig.ANONYMOUS_URIS;
 import static org.learn.common.SecurityPathConfig.PUBLIC_END_URIS;
 import static org.learn.common.SecurityPathConfig.PUBLIC_START_URIS;
 import static org.learn.common.SecurityPathConfig.PUBLIC_URIS;
@@ -58,7 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         return containsAllowedUris(request) || startsWithAllowedStartUris(request) ||
-                matchesGuestRequest(request);
+                matchesGuestRequest(request) || containsAnonymousUris(request);
     }
 
     private boolean containsAllowedUris(final HttpServletRequest request) {
@@ -73,6 +74,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean matchesGuestRequest(final HttpServletRequest request) {
         return PUBLIC_END_URIS.stream()
+                .anyMatch(url -> request.getRequestURI().endsWith(url));
+    }
+
+    private boolean containsAnonymousUris(final HttpServletRequest request) {
+        return ANONYMOUS_URIS.stream()
                 .anyMatch(url -> request.getRequestURI().endsWith(url));
     }
 

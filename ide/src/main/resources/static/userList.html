@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-card.me {
+            border: 2px solid #4CAF50;
+            background-color: #f8fff8;
+        }
+
+        .me-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .user-info {
+            text-align: center;
+        }
+
+        .nickname {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="navigation">
+    <a href="login.html" class="nav-button">로그인 페이지</a>
+    <a href="github.html" class="nav-button">GitHub 로그인</a>
+    <a href="kakao.html" class="nav-button">Kakao 로그인</a>
+    <a href="google.html" class="nav-button">Google 로그인</a>
+</div>
+
+<div class="user-grid" id="userGrid">
+    <!-- 사용자 카드들이 여기에 동적으로 추가됨 -->
+</div>
+
+<script>
+    const api = {
+        BASE_URL: 'http://localhost:8080',
+
+        getHeaders() {
+            const accessToken = localStorage.getItem('accessToken');
+            console.log(accessToken);
+            return {
+                'Content-Type': 'application/json',
+                ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {})
+            };
+        },
+
+        async getAllUsers() {
+            const response = await fetch(`${this.BASE_URL}/users/all`, {
+                headers: this.getHeaders()
+            });
+            return response.json();
+        }
+    };
+
+    function createUserCard(user) {
+        const card = document.createElement('div');
+        card.className = `user-card ${user.userIsMe ? 'me' : ''}`;
+
+        card.innerHTML = `
+                ${user.userIsMe ? '<span class="me-badge">나</span>' : ''}
+                <img src="${user.profileImageUrl}" alt="Profile" class="profile-image">
+                <div class="user-info">
+                    <div class="nickname">${user.nickname}</div>
+                    <div class="user-id">ID: ${user.id}</div>
+                </div>
+            `;
+
+        return card;
+    }
+
+    async function loadUsers() {
+        try {
+            const users = await api.getAllUsers();
+            console.log("getUser: ", users);
+            const userGrid = document.getElementById('userGrid');
+            userGrid.innerHTML = ''; // 기존 내용 클리어
+
+            users.forEach(user => {
+                const userCard = createUserCard(user);
+                userGrid.appendChild(userCard);
+            });
+        } catch (error) {
+            console.error('사용자 목록 로딩 실패:', error);
+            alert('사용자 목록을 불러오는데 실패했습니다.');
+        }
+    }
+
+    // 페이지 로드 시 사용자 목록 불러오기
+    loadUsers();
+</script>
+</body>
+</html>
