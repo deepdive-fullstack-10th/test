@@ -2,6 +2,14 @@
 
 ---
 
+### 6. CodeExecution 학습
+
+#### ✅ [6-1] CodeExecution 기본 셋팅
+
+- IDE UI 작성
+- 코드 실행 후 Server로 부터 응답받기
+- Anonymous Filter 적용
+
 ### 5. Security 학습
 
 #### ✅ [5-2] open api Security 적용

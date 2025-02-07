@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-panel {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .language-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .run-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .run-button:hover {
+            background-color: #45a049;
+        }
+
+        .editor-container {
+            margin-bottom: 20px;
+        }
+
+        .input-container, .output-container {
+            margin-top: 20px;
+        }
+
+        .CodeMirror {
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .input-area {
+            width: 100%;
+            height: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .output-area {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-panel">
+        <select id="languageSelect" class="language-select">
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+        </select>
+        <button id="runButton" class="run-button">실행</button>
+    </div>
+
+    <div class="editor-container">
+        <h3>코드</h3>
+        <textarea id="codeEditor"></textarea>
+    </div>
+
+    <div class="input-container">
+        <h3>입력</h3>
+        <textarea id="inputArea" class="input-area" placeholder="실행에 필요한 입력값을 작성하세요"></textarea>
+    </div>
+
+    <div class="output-container">
+        <h3>실행 결과</h3>
+        <div id="outputArea" class="output-area"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+
+<script>
+    // CodeMirror 초기화
+    const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+        lineNumbers: true,
+        theme: "dracula",
+        mode: "text/x-java",
+        indentUnit: 4,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        lineWrapping: true
+    });
+
+    // 언어 선택에 따른 에디터 모드 변경
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.addEventListener('change', function() {
+        const mode = {
+            'java': 'text/x-java',
+            'javascript': 'javascript',
+            'python': 'python'
+        }[this.value];
+        editor.setOption('mode', mode);
+    });
+
+    // 기본 코드 템플릿
+    const templates = {
+        java: `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+        javascript: `console.log("Hello, World!");`,
+        python: `print("Hello, World!")`
+    };
+
+    // 언어 변경시 템플릿 적용
+    languageSelect.addEventListener('change', function() {
+        editor.setValue(templates[this.value]);
+    });
+
+    // 초기 템플릿 설정
+    editor.setValue(templates.java);
+
+    // 실행 버튼 클릭 이벤트
+    document.getElementById('runButton').addEventListener('click', async function() {
+        const language = languageSelect.value;
+        const code = editor.getValue();
+        const input = document.getElementById('inputArea').value;
+        const outputArea = document.getElementById('outputArea');
+
+        try {
+            outputArea.textContent = '실행 중...';
+
+            const response = await fetch('/ide/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    //'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify({
+                    language,
+                    code,
+                    input
+                })
+            });
+
+            const data = await response.json();
+            outputArea.textContent = data.result;
+
+            // WebSocket 구독 설정
+            /*
+            if (stompClient && stompClient.connected) {
+                stompClient.subscribe(`/topic/executions/${data.executionId}`, (result) => {
+                    const executionResult = JSON.parse(result.body);
+                    outputArea.textContent = executionResult.output;
+                });
+            }
+            */
+
+        } catch (error) {
+            outputArea.textContent = '실행 중 오류가 발생했습니다: ' + error.message;
+        }
+    });
+</script>
+</body>
+</html>

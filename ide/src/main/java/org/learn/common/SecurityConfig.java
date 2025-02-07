@@ -35,6 +35,8 @@ public class SecurityConfig {
                                 "/kakao.html",
                                 "/google.html",
                                 "/userList.html",
+                                "/ide.html",
+                                "/ide/**",
                                 "/auth/**",
                                 "/users/**",
                                 "/favicon.ico"

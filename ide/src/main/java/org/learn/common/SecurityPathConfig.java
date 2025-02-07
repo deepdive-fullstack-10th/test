@@ -10,6 +10,7 @@ public class SecurityPathConfig {
             "/github.html",
             "/kakao.html",
             "/google.html",
+            "/ide.html",
             "/userList.html"
     );
 
@@ -20,7 +21,8 @@ public class SecurityPathConfig {
     public static final List<String> PUBLIC_END_URIS = List.of("/oauth-login");
 
     public static final List<String> ANONYMOUS_URIS = List.of(
-            "/users/all"
+            "/users/all",
+            "/ide/run"
     );
 
 }
