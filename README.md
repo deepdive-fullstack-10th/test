@@ -2,6 +2,23 @@
 
 ---
 
+### 5. Security 학습
+
+#### ✅ [5-2] open api Security 적용
+
+- open Api 중 사용자 정보의 비교가 필요할 때를 처리
+- userList를 통해 본인 정보인지 확인
+- Filter Chain에 UsernamePasswordAuthenticationFilter 전에 검증하는 필터를 추가
+  - 토큰이 있다면 사용자 id를 전달
+  - 토큰이 없다면 사용자 id를 임의(0L, DB 충돌 X)로 전달
+
+#### ✅ [5-1] api Security 적용
+
+- access Token 정보로 사용자 정보 조회
+- refresh Token 은 HttpOnly 적용
+- Filter chain에 OncePerFilter 체이닝
+  - token 검증이 필요한 요청에 대해 검증
+
 ### 4. Oauth 학습
 
 - Server Side Oauth vs Client Side Oauth를 이해하기 위한 학습

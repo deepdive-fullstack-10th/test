@@ -55,39 +55,123 @@
     <div id="userId" class="user-id"></div>
 </div>
 
+<div class="navigation" style="margin-top: 20px;">
+    <a href="userList.html" class="button" style="text-decoration: none; color: white; background-color: #007bff; padding: 10px 20px; border-radius: 5px;">
+        사용자 목록 보기
+    </a>
+</div>
+
 <script>
-    const LOCAL_URL = 'http://localhost:8080';
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const endpoint = `${LOCAL_URL}/auth/google/oauth-login`;
-
-    console.log("google code: ", code);
-
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+    // 토큰 관리
+    const tokenManager = {
+        setAccessToken(token) {
+            localStorage.setItem('accessToken', token);
         },
-        body: JSON.stringify({ oauthCode: code })
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('로그인 성공:', data);
-            // 사용자 정보 요청
-            return fetch(`${LOCAL_URL}/users/me?userId=${data.userId}`);
-        })
-        .then(response => response.json())
-        .then(userData => {
-            // 사용자 카드 업데이트 및 표시
+        getAccessToken() {
+            return localStorage.getItem('accessToken');
+        },
+        removeAccessToken() {
+            localStorage.removeItem('accessToken');
+        },
+        async refreshAccessToken() {
+            try {
+                const response = await fetch(`${api.BASE_URL}/auth/refresh`, {
+                    method: 'POST',
+                    credentials: 'include'  // 쿠키 포함하여 요청
+                });
+                const data = await response.json();
+                this.setAccessToken(data.accessToken);
+                return data.accessToken;
+            } catch (error) {
+                this.removeAccessToken();
+                window.location.href = '/login.html';
+                throw error;
+            }
+        }
+    };
+
+    // API 요청 관리
+    const api = {
+        BASE_URL: 'http://localhost:8080',
+
+        async request(url, options = {}) {
+            try {
+                const accessToken = tokenManager.getAccessToken();
+                const headers = {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {}),
+                    ...options.headers
+                };
+
+                const response = await fetch(`${this.BASE_URL}${url}`, {
+                    ...options,
+                    headers
+                });
+
+                if (response.status === 400) {
+                    const newToken = await tokenManager.refreshAccessToken();
+                    headers.Authorization = `Bearer ${newToken}`;
+                    return fetch(`${this.BASE_URL}${url}`, {
+                        ...options,
+                        headers
+                    });
+                }
+
+                return response;
+            } catch (error) {
+                console.error('API 요청 실패:', error);
+                throw error;
+            }
+        },
+
+        async login(code) {
+            const response = await this.request('/auth/google/oauth-login', {
+                method: 'POST',
+                body: JSON.stringify({ oauthCode: code })
+            });
+            return response.json();
+        },
+
+        async getUserInfo() {
+            const response = await this.request('/users/me');
+            return response.json();
+        }
+    };
+
+    // 메인 로직
+    async function handleOAuthCallback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (!code) return;
+
+        try {
+            console.log("깃허브 코드:", code);
+
+            // OAuth 로그인 처리
+            const loginData = await api.login(code);
+            console.log('로그인 성공:', loginData);
+
+            // Access Token 저장
+            tokenManager.setAccessToken(loginData.accessToken);
+
+            // 사용자 정보 조회
+            const userData = await api.getUserInfo();
+
+            // UI 업데이트
             document.getElementById('profileImage').src = userData.profileImageUrl;
             document.getElementById('nickname').textContent = userData.nickname;
             document.getElementById('userId').textContent = `ID: ${userData.id}`;
             document.getElementById('userCard').style.display = 'block';
-        })
-        .catch(error => {
+
+        } catch (error) {
             console.error('오류 발생:', error);
             alert('처리 중 오류가 발생했습니다.');
-        });
+        }
+    }
+
+    // 초기화
+    handleOAuthCallback();
 </script>
 </body>
 </html>
