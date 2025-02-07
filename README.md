@@ -2,6 +2,15 @@
 
 ---
 
+### 5. Security 학습
+
+#### ✅ [5-1] api Security 적용
+
+- access Token 정보로 사용자 정보 조회
+- refresh Token 은 HttpOnly 적용
+- Filter chain에 OncePerFilter 체이닝
+  - token 검증이 필요한 요청에 대해 검증
+
 ### 4. Oauth 학습
 
 - Server Side Oauth vs Client Side Oauth를 이해하기 위한 학습
