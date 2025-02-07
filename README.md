@@ -2,6 +2,47 @@
 
 ---
 
+### 4. Oauth 학습
+
+- Server Side Oauth vs Client Side Oauth를 이해하기 위한 학습
+- H2 DB, JPA, Security를 활용해서 학습을 진행한다.
+- 깃헙 Oauth를 연동한다.
+
+#### ✅ [4-6] jwt 발급
+
+- 사용자 ID를 기준으로 Jwt token을 발급한다.
+- accessToken과 refreshToken을 발급
+- 사용자 id로 로그인한 사용자 조회
+
+#### ✅ [4-5] 구글 OAuth 추가
+
+- Google OAuth 정보를 추가한다.
+
+#### ✅ [4-4] 카카오 OAuth 추가
+
+- Kakao OAuth 정보를 추가한다.
+
+#### ✅ [4-3] Refactoring
+
+- 재사용성을 고려해서 리팩토링을 진행한다.
+
+#### ✅ [4-2] Client Side Oauth 연동
+
+- static 폴더의 login.html로 oauth 로그인 페이지를 만든다.
+  - 깃헙 로그인을 생성한다.
+  - front에서 oauth code를 받는다.
+  - server에서 로그인해본다.
+- Client Side 방식으로 으로 Oauth 로그인이 되는지 확인한다.
+  - OAuth Code 정보로 로그인 요청
+  - 회원가입 완료되었다는 응답만 추가
+
+#### ✅ [4-1] User 엔티티 생성
+
+- Spring Data JPA와 H2 DB를 사용해서 서버를 실행한다.
+  - 설정이 제대로 됐는지 확인
+- Security 설정을 통해 H2 DB로 접속이 되는지 확인한다.
+- User Entity를 작성하고 H2 DB에 제대로 생성이 되었는지 확인한다.
+
 ### 3. Yorkie 학습
 
 #### ✅ [3-2] Yorkie 추가 정보 정리하기
