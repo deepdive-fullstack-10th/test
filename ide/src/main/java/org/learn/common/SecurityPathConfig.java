@@ -15,7 +15,8 @@ public class SecurityPathConfig {
     );
 
     public static final List<String> PUBLIC_START_URIS = List.of(
-            "/h2-console"
+            "/h2-console",
+            "/stomp"
     );
 
     public static final List<String> PUBLIC_END_URIS = List.of("/oauth-login");

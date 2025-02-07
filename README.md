@@ -4,6 +4,12 @@
 
 ### 6. CodeExecution 학습
 
+#### ✅ [6-2] STOMP SSE 적용
+
+- 서버 STOMP 설정
+- Front STOMP 구독
+- 코드 실행 요청 후 STOMP로 응답받기
+
 #### ✅ [6-1] CodeExecution 기본 셋팅
 
 - IDE UI 작성

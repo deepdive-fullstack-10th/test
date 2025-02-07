@@ -29,17 +29,9 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new AnonymousUserFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
-                                "/h2-console/**",
-                                "/login.html",
-                                "/github.html",
-                                "/kakao.html",
-                                "/google.html",
-                                "/userList.html",
-                                "/ide.html",
-                                "/ide/**",
-                                "/auth/**",
-                                "/users/**",
-                                "/favicon.ico"
+                                "/h2-console/**", "/login.html", "/github.html", "/kakao.html",
+                                "/google.html", "/userList.html", "/ide.html", "/ide/**",
+                                "/auth/**", "/users/**", "/stomp/**", "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -49,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
 

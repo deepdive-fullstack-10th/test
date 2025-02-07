@@ -29,7 +29,7 @@ public class AnonymousUserFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        log.info("Anonymous UserFilter ==========> uri: {}", request.getRequestURI());
+        log.info("Anonymous UserFilter ==========> uri: {}, header: {}", request.getRequestURI(), request.getHeader(HttpHeaders.AUTHORIZATION));
         Long userId = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .map(this::extractToken)
                 .map(jwtHelper::getUserId)

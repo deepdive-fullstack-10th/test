@@ -117,6 +117,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
 
 <script>
     // CodeMirror 초기화
@@ -143,7 +145,8 @@
 
     // 기본 코드 템플릿
     const templates = {
-        java: `public class Main {
+        java:
+            `public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
     }
@@ -160,8 +163,20 @@
     // 초기 템플릿 설정
     editor.setValue(templates.java);
 
-    // 실행 버튼 클릭 이벤트
-    document.getElementById('runButton').addEventListener('click', async function() {
+    const IDE_ID = "ide-1";
+    let stompClient = null;
+    let currentSubscription = null;
+
+    function setupStompConnection() {
+        const socket = new SockJS('http://localhost:8080/stomp');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function(frame) {
+            console.log("STOMP 연결 성공:", frame);
+        });
+    }
+
+    async function runCode() {
         const language = languageSelect.value;
         const code = editor.getValue();
         const input = document.getElementById('inputArea').value;
@@ -170,7 +185,7 @@
         try {
             outputArea.textContent = '실행 중...';
 
-            const response = await fetch('/ide/run', {
+            await fetch('/ide/run', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -179,27 +194,57 @@
                 body: JSON.stringify({
                     language,
                     code,
-                    input
+                    input,
+                    ideId: IDE_ID
                 })
             });
-
-            const data = await response.json();
-            outputArea.textContent = data.result;
-
-            // WebSocket 구독 설정
-            /*
-            if (stompClient && stompClient.connected) {
-                stompClient.subscribe(`/topic/executions/${data.executionId}`, (result) => {
-                    const executionResult = JSON.parse(result.body);
-                    outputArea.textContent = executionResult.output;
-                });
-            }
-            */
-
         } catch (error) {
-            outputArea.textContent = '실행 중 오류가 발생했습니다: ' + error.message;
+            outputArea.textContent = '실행 중 오류 발생: ' + error.message;
+        }
+    }
+
+    // IDE ID로 구독
+    function subscribeExecution() {
+        currentSubscription = stompClient.subscribe(`/sub/executions/${IDE_ID}`, function(message) {
+            const result = JSON.parse(message.body);
+            document.getElementById('outputArea').textContent = result.output || result.message;
+
+            if (result.status != "RUNNING") {
+                currentSubscription.unsubscribe();
+                currentSubscription = null;
+            }
+        });
+    }
+
+    document.getElementById('runButton').addEventListener('click', async function() {
+        if (currentSubscription != null) {
+            console.error("이미 실행중입니다.")
+            return;
+        }
+
+        const language = languageSelect.value;
+        const code = editor.getValue();
+        const input = document.getElementById('inputArea').value;
+        const outputArea = document.getElementById('outputArea');
+
+        try {
+            await subscribeExecution();
+            console.log("subcribe완료!");
+            await runCode({language, code, input});
+            console.log("코드 실행완료!");
+        } catch (error) {
+            outputArea.textContent = '실행 중 오류 발생: ' + error.message;
+            if (currentSubscription != null) {
+                currentSubscription.unsubscribe();
+                currentSubscription = null;
+            }
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setupStompConnection();
+    });
+
 </script>
 </body>
 </html>
