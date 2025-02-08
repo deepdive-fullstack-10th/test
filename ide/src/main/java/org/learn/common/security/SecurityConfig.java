@@ -1,7 +1,8 @@
-package org.learn.common;
+package org.learn.common.security;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.learn.common.jwt.JwtHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

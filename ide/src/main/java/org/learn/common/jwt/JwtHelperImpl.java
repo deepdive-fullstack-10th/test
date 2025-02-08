@@ -1,4 +1,4 @@
-package org.learn.common;
+package org.learn.common.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

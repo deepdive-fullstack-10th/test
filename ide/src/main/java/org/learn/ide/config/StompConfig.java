@@ -1,4 +1,4 @@
-package org.learn.common;
+package org.learn.ide.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

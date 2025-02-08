@@ -1,4 +1,4 @@
-package org.learn.common;
+package org.learn.common.security;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.learn.ide;
+package org.learn.ide.dto;
 
 public record ExecutionResult(
         String executionId,

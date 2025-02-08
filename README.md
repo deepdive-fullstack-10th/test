@@ -4,6 +4,13 @@
 
 ### 6. CodeExecution 학습
 
+#### ✅ [6-3] 비동기 메세징 전달
+
+- Rabbit MQ로 설정
+- Code 실행 시 Exchange에 Rabbit MQ 전달
+- Worker 에서 Rabbit MQ exchange subscribe
+- Worker 에서 응답받는 것까지 확인
+
 #### ✅ [6-2] STOMP SSE 적용
 
 - 서버 STOMP 설정

@@ -16,6 +16,11 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123!@#
 
 oauth:
   github:
@@ -33,3 +38,9 @@ jwt:
   secret-key: random-secret-key-32-byte-1234567890-1234567890
   access-exp: 3600000
   refresh-exp: 86400000
+
+rabbitmq:
+  exchange:
+    name: code.execution.exchange
+  routing:
+    key: code.execution.key

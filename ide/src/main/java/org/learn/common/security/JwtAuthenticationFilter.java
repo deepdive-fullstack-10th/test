@@ -1,9 +1,9 @@
-package org.learn.common;
+package org.learn.common.security;
 
-import static org.learn.common.SecurityPathConfig.ANONYMOUS_URIS;
-import static org.learn.common.SecurityPathConfig.PUBLIC_END_URIS;
-import static org.learn.common.SecurityPathConfig.PUBLIC_START_URIS;
-import static org.learn.common.SecurityPathConfig.PUBLIC_URIS;
+import static org.learn.common.security.SecurityPathConfig.ANONYMOUS_URIS;
+import static org.learn.common.security.SecurityPathConfig.PUBLIC_END_URIS;
+import static org.learn.common.security.SecurityPathConfig.PUBLIC_START_URIS;
+import static org.learn.common.security.SecurityPathConfig.PUBLIC_URIS;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.learn.common.jwt.JwtHelper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
