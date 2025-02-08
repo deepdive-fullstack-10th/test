@@ -2,6 +2,7 @@ package org.learn.ide;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.learn.ide.dto.ExecutionResult;
 import org.learn.ide.producer.CodeExecutionProducer;
 import org.learn.ide.producer.StompSseProducer;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,14 @@ public class IdeController {
         codeExecutionProducer.publishCode(dto);
 
         return ResponseEntity.ok(new IdeRunResponse(dto.ideId()));
+    }
+
+    @PostMapping("/result")
+    public ResponseEntity<Void> handleExecutionResult(@RequestBody ExecutionResult result) {
+        log.info("Received execution result - result {}", result.toString());
+
+        stompSseProducer.publishResult(result);
+        return ResponseEntity.ok().build();
     }
 
     public record IdeRequest(String language, String code, String input, String ideId) {}

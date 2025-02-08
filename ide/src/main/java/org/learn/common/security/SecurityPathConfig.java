@@ -11,7 +11,8 @@ public class SecurityPathConfig {
             "/kakao.html",
             "/google.html",
             "/ide.html",
-            "/userList.html"
+            "/userList.html",
+            "/ide/result"
     );
 
     public static final List<String> PUBLIC_START_URIS = List.of(

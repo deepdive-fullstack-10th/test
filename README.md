@@ -4,6 +4,15 @@
 
 ### 6. CodeExecution 학습
 
+#### ✅ [6-4] 비동기 실행결과 전달
+
+- worker에서 subscribe한 메세지로 코드를 실행했다고 가정
+- 실행 결과를 전달하기 위해 IDE의 Rest API로 요청
+  - WebFlux를 이용해 비동기 처리, 이벤트 루프로 처리 되게끔
+  - Async Annotation은 Thread가 점유 됨.
+  - 코드 실행에 제약 시간을 걸어두겠지만, 오래 걸리는 코드때문에 thread가 점유되면 안됨.
+- IDE에서 Worker로 부터 전달 받은 결과로 사용자에게 SSE를 쏨
+
 #### ✅ [6-3] 비동기 메세징 전달
 
 - Rabbit MQ로 설정
