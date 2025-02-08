@@ -4,6 +4,14 @@
 
 ### 6. CodeExecution 학습
 
+#### [6-5] 자바 코드 실행
+
+- docker pull openjdk:17-slim으로 docker 컨테이너 생성
+- 실행 요청마다 sandbox 환경에서 각 코드를 실행
+- 입력 정보를 System에서 읽도록 명시
+- 각 실행 결과를 예외, 성공에 따라 구분
+- 같은 IDE에서 정보가 공유 되는지 확인
+
 #### ✅ [6-4] 비동기 실행결과 전달
 
 - worker에서 subscribe한 메세지로 코드를 실행했다고 가정

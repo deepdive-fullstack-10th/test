@@ -165,7 +165,7 @@
 
     const IDE_ID = "ide-1";
     let stompClient = null;
-    let currentSubscription = null;
+    let isRunning = false;
 
     function setupStompConnection() {
         const socket = new SockJS('http://localhost:8080/stomp');
@@ -173,6 +173,7 @@
 
         stompClient.connect({}, function(frame) {
             console.log("STOMP 연결 성공:", frame);
+            subscribeExecution();
         });
     }
 
@@ -182,8 +183,8 @@
         const input = document.getElementById('inputArea').value;
         const outputArea = document.getElementById('outputArea');
 
+        console.log("input: ", input);
         try {
-            outputArea.textContent = '실행 중...';
 
             await fetch('/ide/run', {
                 method: 'POST',
@@ -194,7 +195,7 @@
                 body: JSON.stringify({
                     language,
                     code,
-                    input,
+                    input: input,
                     ideId: IDE_ID
                 })
             });
@@ -205,31 +206,39 @@
 
     // IDE ID로 구독
     function subscribeExecution() {
-        currentSubscription = stompClient.subscribe(`/sub/executions/${IDE_ID}`, function(message) {
+        stompClient.subscribe(`/sub/executions/${IDE_ID}`, function(message) {
             const result = JSON.parse(message.body);
-            document.getElementById('outputArea').textContent = result.output || result.message;
-
-            if (result.status != "RUNNING") {
-                currentSubscription.unsubscribe();
-                currentSubscription = null;
+            console.log("subscribe result: ", result);
+            if (result.status == "SUCCESS") {
+                document.getElementById('outputArea').textContent = result.output;
+                isRunning = false;
+            }
+            if (result.status == "FAIL") {
+                document.getElementById('outputArea').textContent = result.error;
+                isRunning = false;
+            }
+            if (result.status == "RUNNING") {
+                document.getElementById('outputArea').textContent = result.output;
+            }
+            if (result.status == "INPUT") {
+                // 깜빡 깜빡
             }
         });
+        console.log("subcribe완료!");
     }
 
     document.getElementById('runButton').addEventListener('click', async function() {
-        if (currentSubscription != null) {
+        if (isRunning) {
             console.error("이미 실행중입니다.")
             return;
         }
-
+        isRunning = true;
         const language = languageSelect.value;
         const code = editor.getValue();
         const input = document.getElementById('inputArea').value;
         const outputArea = document.getElementById('outputArea');
 
         try {
-            await subscribeExecution();
-            console.log("subcribe완료!");
             await runCode({language, code, input});
             console.log("코드 실행완료!");
         } catch (error) {

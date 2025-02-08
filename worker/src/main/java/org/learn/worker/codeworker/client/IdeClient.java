@@ -20,7 +20,7 @@ public class IdeClient {
                 .bodyValue(result)
                 .retrieve()
                 .bodyToMono(Void.class)
-                .doOnSuccess(unused -> log.info("결과 전달 성공 : {}", result.executionId()))
+                .doOnSuccess(success -> log.info("결과 전달 성공 : {}", result.toString()))
                 .doOnError(throwable -> {
                     log.error("왜 실패했지? - executionId: {}", result.executionId(), throwable);
                 })

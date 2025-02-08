@@ -21,18 +21,10 @@ public class CodeExecutionConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.name}")
     public void consumeMessage(CodeExecutionMessage message) {
-        log.info("Received code execution request - executionId: {}, language: {}",
-                message.executionId(), message.language());
+        log.info("Received code execution request - {}", message.toString());
 
         // result 응답 받고 결과가 성공했다고 가정.
-        codeExecutionService.execute(message);
-        ExecutionResult resultMessage = new ExecutionResult(
-                message.executionId(),
-                ExecutionStatus.SUCCESS,
-                "실행 완료",
-                null,
-                LocalDateTime.now()
-        );
+        ExecutionResult resultMessage = codeExecutionService.execute(message);
 
         // 전송
         ideClient.sendResultToMainServer(resultMessage);

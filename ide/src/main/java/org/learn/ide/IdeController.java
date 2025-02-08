@@ -23,6 +23,7 @@ public class IdeController {
 
     @PostMapping("/run")
     public ResponseEntity<IdeRunResponse> run(@AuthenticationPrincipal Long userId, @RequestBody IdeRequest dto) {
+        log.info("Received Run Request - {}", dto.toString());
         // 실제 서비스는 사용자 검증 필요
         stompSseProducer.publishRunning(dto.ideId());
         codeExecutionProducer.publishCode(dto);

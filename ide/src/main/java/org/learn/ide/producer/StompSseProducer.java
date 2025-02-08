@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class StompSseProducer {
 
     private static final String EXECUTION_LOCATION_FORMAT = "/sub/executions/%s";
+    private static final String CHAT_LOCATION_FORAMT = "/sub/chat/%s";
 
     private final SimpMessagingTemplate messagingTemplate;
 
