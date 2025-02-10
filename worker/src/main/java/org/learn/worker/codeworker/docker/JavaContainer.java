@@ -1,32 +1,30 @@
-package org.learn.worker.codeworker.docker;
+    package org.learn.worker.codeworker.docker;
 
-import java.nio.file.Path;
-import java.util.List;
+    import static org.learn.worker.codeworker.docker.DockerConstant.DEFAULT_CPUS;
+    import static org.learn.worker.codeworker.docker.DockerConstant.JAVA_COMMAND_FORMAT;
+    import static org.learn.worker.codeworker.docker.DockerConstant.JAVA_COMPILE_OPTIONS;
+    import static org.learn.worker.codeworker.docker.DockerConstant.JAVA_IMAGE;
+    import static org.learn.worker.codeworker.docker.DockerConstant.DEFAULT_MEMORY;
+    import static org.learn.worker.codeworker.docker.DockerConstant.DEFAULT_WORK_DIR;
+    import static org.learn.worker.codeworker.docker.DockerConstant.JAVA_RUNTIME_OPTIONS;
 
-public class JavaContainer {
+    import java.nio.file.Path;
+    import java.util.List;
 
-    private static final String DEFAULT_MEMORY = "128m";
-    private static final String DEFAULT_CPUS = "1";
-    private static final String DEFAULT_WORK_DIR = "/code";
-    private static final String DEFAULT_JAVA_IMAGE = "openjdk:17-slim";
-    private static final String DEFAULT_COMMAND_FORMAT = "echo '%s' | javac Main.java && echo '%s' | java Main";
+    public class JavaContainer {
 
-    public static List<String> extract(String containerId, Path tempDir, String command) {
-        return DockerCommander.builder()
-                .withRun()
-                .withRemove()
-                .withLimits(DEFAULT_MEMORY, DEFAULT_CPUS)
-                .withSecurity()
-                .withName(containerId)
-                .withVolume(tempDir)
-                .withWorkDir(DEFAULT_WORK_DIR)
-                .withImage(DEFAULT_JAVA_IMAGE)
-                .withCommand(command)
-                .build();
+        public static List<String> extract(String containerId, Path tempDir, String input) {
+            return DockerCommander.builder()
+                    .withRun()
+                    .withRemove()
+                    .withLimits(DEFAULT_MEMORY, DEFAULT_CPUS)
+                    .withSecurity()
+                    .withName(containerId)
+                    .withVolume(tempDir)
+                    .withWorkDir(DEFAULT_WORK_DIR)
+                    .withImage(JAVA_IMAGE)
+                    .withCommand(String.format(JAVA_COMMAND_FORMAT, JAVA_COMPILE_OPTIONS, input, JAVA_RUNTIME_OPTIONS))
+                    .build();
+        }
+
     }
-
-    public static String extractCommand(String input) {
-        return String.format(DEFAULT_COMMAND_FORMAT, input, input);
-    }
-
-}

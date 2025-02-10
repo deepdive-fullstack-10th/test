@@ -210,18 +210,27 @@
             const result = JSON.parse(message.body);
             console.log("subscribe result: ", result);
             if (result.status == "SUCCESS") {
-                document.getElementById('outputArea').textContent = result.output;
+                document.getElementById('outputArea').textContent = result.output
+                    + ", 실행시간: " +result.executionTime + "ms"
+                    + ", 메모리: " + result.memoryUsageKB + "kb";
                 isRunning = false;
             }
-            if (result.status == "FAIL") {
-                document.getElementById('outputArea').textContent = result.error;
+            if (result.status == "ERROR") {
+                document.getElementById('outputArea').textContent = result.output
+                + ", 실행시간: " + result.executionTime + "ms"
+                + ", 메모리: " + result.memoryUsageKB + "kb";
                 isRunning = false;
             }
             if (result.status == "RUNNING") {
                 document.getElementById('outputArea').textContent = result.output;
             }
-            if (result.status == "INPUT") {
-                // 깜빡 깜빡
+            if (result.status == "TIMEOUT") {
+                document.getElementById('outputArea').textContent = result.output;
+                isRunning = false;
+            }
+            if (result.status == "OOM") {
+                document.getElementById('outputArea').textContent = result.output;
+                isRunning = false;
             }
         });
         console.log("subcribe완료!");

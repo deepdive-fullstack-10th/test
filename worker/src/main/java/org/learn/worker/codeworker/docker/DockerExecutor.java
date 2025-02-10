@@ -2,36 +2,41 @@ package org.learn.worker.codeworker.docker;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.learn.worker.codeworker.dto.ExecutionResult;
 
 @Slf4j
 public class DockerExecutor {
 
+    private static final int TIMEOUT_EXIT_CODE = 124;
+
     public static ExecutionResult executeDockerCommand(
             List<String> command,
-             String executionId,
-             int timeoutSeconds
+            String executionId
     ) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(command);
-        pb.redirectErrorStream(true);
+        pb.redirectErrorStream(false);
+
         Process process = pb.start();
+        int exitCode = process.waitFor();
+        String successFullOutput = new String(process.getInputStream().readAllBytes());
+        String errorOutput = new String(process.getErrorStream().readAllBytes());
 
-        boolean finishedInTime = process.waitFor(timeoutSeconds, TimeUnit.SECONDS);
-
-        if (!finishedInTime) {
-            log.warn("Process timed out: executionId={}, command={}", executionId, String.join(" ", command));
-            process.destroyForcibly();
+        if (exitCode == TIMEOUT_EXIT_CODE) {
+            log.error("error Output: {}", errorOutput);
             return ExecutionResult.createTimeOutMessage(executionId);
         }
 
-        String result = new String(process.getInputStream().readAllBytes());
-        int exitCode = process.exitValue();
-        if (exitCode != 0) {
-            return ExecutionResult.createFailMessage(executionId, result);
+        ExecutionMetrics metrics = ExecutionMetrics.parseMetrics(successFullOutput);
+        String programOutput = ExecutionMetrics.extractProgramOutput(successFullOutput);
+
+        if (exitCode != 0 || metrics.errorLog() != null) {
+            log.error("Exit Code: {}, JVM Error Log: {}", exitCode, metrics.errorLog());
+            return ExecutionResult.createFailMessage(executionId, metrics.errorLog(), metrics);
         }
-        return ExecutionResult.createSuccessMessage(executionId, result);
+
+        log.info("success Output: {}", successFullOutput);
+        return ExecutionResult.createSuccessMessage(executionId, programOutput, metrics);
     }
 
 }

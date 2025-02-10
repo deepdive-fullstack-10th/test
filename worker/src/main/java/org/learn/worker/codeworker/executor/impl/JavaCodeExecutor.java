@@ -3,7 +3,6 @@ package org.learn.worker.codeworker.executor.impl;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.learn.worker.codeworker.docker.DockerExecutor;
 import org.learn.worker.codeworker.docker.JavaContainer;
@@ -24,12 +23,10 @@ public class JavaCodeExecutor implements CodeExecutor {
         try {
             tempDir = TempDirectoryManager.createTempDirectory();
             CodeFileManager.createJavaFile(tempDir, message.code());
-
-            String command = JavaContainer.extractCommand(message.input());
-            List<String> dockerCommand = JavaContainer.extract(containerId, tempDir, command);
-
+            List<String> dockerCommand = JavaContainer.extract(containerId, tempDir, message.input().trim());
             log.info("Executing code in container: {}", containerId);
-            return DockerExecutor.executeDockerCommand(dockerCommand, message.executionId(), 2);
+
+            return DockerExecutor.executeDockerCommand(dockerCommand, message.executionId());
         } catch (Exception e) {
             return ExecutionResult.createErrorMessage(message.executionId(), e.getMessage());
         } finally {
