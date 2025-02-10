@@ -4,6 +4,10 @@
 
 ### 6. CodeExecution 학습
 
+#### [6-6] 코드 리팩토링
+
+- 다른 언어를 도입하기 쉽도록 확장성 있게 리팩토링한다
+
 #### [6-5] 자바 코드 실행
 
 - docker pull openjdk:17-slim으로 docker 컨테이너 생성
