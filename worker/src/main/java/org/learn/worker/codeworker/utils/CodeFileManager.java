@@ -25,6 +25,10 @@ public class CodeFileManager {
         createFile(tempDir, "Main.js", code);
     }
 
+    public static void createCppFile(Path tempDir, String code) throws IOException {
+        createFile(tempDir, "Main.cpp", code);
+    }
+
     public static String readFile(Path tempDir, String filename) {
         try {
             Path path = tempDir.resolve(filename);

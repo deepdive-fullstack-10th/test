@@ -5,6 +5,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.learn.worker.codeworker.dto.CodeExecutionMessage;
 import org.learn.worker.codeworker.dto.ExecutionResult;
+import org.learn.worker.codeworker.service.impl.CppCodeExecutor;
 import org.learn.worker.codeworker.service.impl.JavaCodeExecutor;
 import org.learn.worker.codeworker.service.impl.NodeCodeExecutor;
 import org.learn.worker.codeworker.service.impl.PythonCodeExecutor;
@@ -20,6 +21,7 @@ public class CodeExecutionService {
         executors.put("java", new JavaCodeExecutor());
         executors.put("python", new PythonCodeExecutor());
         executors.put("javascript", new NodeCodeExecutor());
+        executors.put("cpp", new CppCodeExecutor());
         // 다른 언어 추가
     }
 

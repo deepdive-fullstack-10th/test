@@ -93,6 +93,7 @@
             <option value="java">Java</option>
             <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
+            <option value="cpp">C++</option>
         </select>
         <button id="runButton" class="run-button">실행</button>
     </div>
@@ -138,7 +139,8 @@
         const mode = {
             'java': 'text/x-java',
             'javascript': 'javascript',
-            'python': 'python'
+            'python': 'python',
+            'cpp': 'text/x-c++src'
         }[this.value];
         editor.setOption('mode', mode);
     });
@@ -152,7 +154,15 @@
     }
 }`,
         javascript: `console.log("Hello, World!");`,
-        python: `print("Hello, World!")`
+        python: `print("Hello, World!")`,
+        cpp:
+            `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`
     };
 
     // 언어 변경시 템플릿 적용
