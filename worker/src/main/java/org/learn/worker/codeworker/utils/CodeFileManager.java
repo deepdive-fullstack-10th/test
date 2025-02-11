@@ -21,6 +21,10 @@ public class CodeFileManager {
         createFile(tempDir, "Main.py", code);
     }
 
+    public static void createNodeFile(Path tempDir, String code) throws IOException {
+        createFile(tempDir, "Main.js", code);
+    }
+
     public static String readFile(Path tempDir, String filename) {
         try {
             Path path = tempDir.resolve(filename);

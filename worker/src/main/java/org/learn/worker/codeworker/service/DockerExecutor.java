@@ -49,8 +49,8 @@ public class DockerExecutor {
     private static ExecutionResult processSuccess(String executionId, Path tempDir) {
         String output = readFile(tempDir, DockerConstant.EXECUTION_RESULT_LOG).trim();
         ParseResult parseResult = OutputParser.parse(output);
-        log.error("SUCCESS_EXIT_CODE: {}", executionId);
-        log.error("SUCCESS_OUTPUT: {}", output);
+        log.info("SUCCESS_EXIT_CODE: {}", executionId);
+        log.info("SUCCESS_OUTPUT: {}", output);
         return ExecutionResult.createSuccessMessage(executionId, parseResult);
     }
 
