@@ -17,6 +17,10 @@ public class CodeFileManager {
         createFile(tempDir, "Main.java", code);
     }
 
+    public static void createPythonFile(Path tempDir, String code) throws IOException {
+        createFile(tempDir, "Main.py", code);
+    }
+
     public static String readFile(Path tempDir, String filename) {
         try {
             Path path = tempDir.resolve(filename);

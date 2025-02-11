@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.learn.worker.codeworker.dto.CodeExecutionMessage;
 import org.learn.worker.codeworker.dto.ExecutionResult;
 import org.learn.worker.codeworker.service.impl.JavaCodeExecutor;
+import org.learn.worker.codeworker.service.impl.PythonCodeExecutor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class CodeExecutionService {
 
     public CodeExecutionService() {
         executors.put("java", new JavaCodeExecutor());
+        executors.put("python", new PythonCodeExecutor());
         // 다른 언어 추가
     }
 

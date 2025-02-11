@@ -14,7 +14,7 @@ import org.learn.worker.codeworker.utils.OutputParser;
 @Slf4j
 public class DockerExecutor {
 
-    public static ExecutionResult executeJava(
+    public static ExecutionResult execute(
             List<String> command,
             String executionId,
             Path tempDir
