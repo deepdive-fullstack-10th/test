@@ -5,8 +5,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.learn.worker.codeworker.dto.CodeExecutionMessage;
 import org.learn.worker.codeworker.dto.ExecutionResult;
-import org.learn.worker.codeworker.executor.CodeExecutor;
-import org.learn.worker.codeworker.executor.impl.JavaCodeExecutor;
+import org.learn.worker.codeworker.service.impl.JavaCodeExecutor;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -215,20 +215,10 @@
                     + ", 메모리: " + result.memoryUsageKB + "kb";
                 isRunning = false;
             }
-            if (result.status == "ERROR") {
-                document.getElementById('outputArea').textContent = result.output
-                + ", 실행시간: " + result.executionTime + "ms"
-                + ", 메모리: " + result.memoryUsageKB + "kb";
-                isRunning = false;
-            }
             if (result.status == "RUNNING") {
                 document.getElementById('outputArea').textContent = result.output;
             }
-            if (result.status == "TIMEOUT") {
-                document.getElementById('outputArea').textContent = result.output;
-                isRunning = false;
-            }
-            if (result.status == "OOM") {
+            if (result.status == "RUNTIME_ERROR" || result.status == "COMPILE_ERROR" || result.status == "TIMEOUT_ERROR") {
                 document.getElementById('outputArea').textContent = result.output;
                 isRunning = false;
             }

@@ -1,4 +1,4 @@
-package org.learn.worker.codeworker.executor;
+package org.learn.worker.codeworker.service;
 
 import org.learn.worker.codeworker.dto.CodeExecutionMessage;
 import org.learn.worker.codeworker.dto.ExecutionResult;
