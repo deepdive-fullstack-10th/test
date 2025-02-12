@@ -1,4 +1,4 @@
-package org.learn.common;
+package org.learn.common.security;
 
 import java.util.List;
 
@@ -10,17 +10,21 @@ public class SecurityPathConfig {
             "/github.html",
             "/kakao.html",
             "/google.html",
-            "/userList.html"
+            "/ide.html",
+            "/userList.html",
+            "/ide/result"
     );
 
     public static final List<String> PUBLIC_START_URIS = List.of(
-            "/h2-console"
+            "/h2-console",
+            "/stomp"
     );
 
     public static final List<String> PUBLIC_END_URIS = List.of("/oauth-login");
 
     public static final List<String> ANONYMOUS_URIS = List.of(
-            "/users/all"
+            "/users/all",
+            "/ide/run"
     );
 
 }

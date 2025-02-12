@@ -1,4 +1,4 @@
-package org.learn.common;
+package org.learn.common.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.learn.common.jwt.JwtHelper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,7 +29,7 @@ public class AnonymousUserFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        log.info("Anonymous UserFilter ==========> uri: {}", request.getRequestURI());
+        log.info("Anonymous UserFilter ==========> uri: {}, header: {}", request.getRequestURI(), request.getHeader(HttpHeaders.AUTHORIZATION));
         Long userId = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .map(this::extractToken)
                 .map(jwtHelper::getUserId)

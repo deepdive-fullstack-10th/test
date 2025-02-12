@@ -1,0 +1,25 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123!@#
+
+  application:
+    name: code-worker
+
+server:
+  port: 8081
+
+main:
+  server:
+    url: http://localhost:8080
+    endpoint: /api/ide/result
+
+rabbitmq:
+  exchange:
+    name: code.execution.exchange
+  queue:
+    name: code.execution.queue
+  routing:
+    key: code.execution.key

@@ -9,8 +9,7 @@
     import org.learn.auth.service.GithubService;
     import org.learn.auth.service.GoogleService;
     import org.learn.auth.service.KakaoService;
-    import org.learn.common.JwtHelper;
-    import org.springframework.http.HttpHeaders;
+    import org.learn.common.jwt.JwtHelper;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.PathVariable;
     import org.springframework.web.bind.annotation.PostMapping;

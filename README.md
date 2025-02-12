@@ -2,6 +2,74 @@
 
 ---
 
+### 6. CodeExecution 학습
+
+#### ✅ [6-11] CPP 코드 실행기 추가
+
+- cpp 실행기를 추가한다.
+
+#### ✅ [6-10] JS 코드 실행기 추가
+
+- js 실행기를 추가한다.
+
+#### ✅ [6-9] 파이썬 코드 실행기 추가
+
+- 파이썬 실행기를 추가한다.
+
+#### ✅ [6-8] 예외 분리
+
+- 컴파일 시점 및 런타임 시점 예외를 분리한다.
+  - 컴파일 수준에서 발생하는 예외와 런타임 수준에서 발생하는 예외는 예외 발생 시점이 다르다.
+  - 각 정보를 분리해서 Custom EXIT code를 사용해 식별한다.
+
+#### ✅ [6-7] 예외 처리
+
+- 시간 제한 설정
+  - 2초를 초과하면 시간 제한이 발생한다.
+- 메모리 제한 설정
+  - 128MB를 초과하면 OutOfMemory가 발생한다.
+- 그 외 Runtime Error도 반환한다.
+
+#### ✅ [6-6] 코드 리팩토링
+
+- 다른 언어를 도입하기 쉽도록 확장성 있게 리팩토링한다
+
+#### ✅ [6-5] 자바 코드 실행
+
+- docker pull openjdk:17-slim으로 docker 컨테이너 생성
+- 실행 요청마다 sandbox 환경에서 각 코드를 실행
+- 입력 정보를 System에서 읽도록 명시
+- 각 실행 결과를 예외, 성공에 따라 구분
+- 같은 IDE에서 정보가 공유 되는지 확인
+
+#### ✅ [6-4] 비동기 실행결과 전달
+
+- worker에서 subscribe한 메세지로 코드를 실행했다고 가정
+- 실행 결과를 전달하기 위해 IDE의 Rest API로 요청
+  - WebFlux를 이용해 비동기 처리, 이벤트 루프로 처리 되게끔
+  - Async Annotation은 Thread가 점유 됨.
+  - 코드 실행에 제약 시간을 걸어두겠지만, 오래 걸리는 코드때문에 thread가 점유되면 안됨.
+- IDE에서 Worker로 부터 전달 받은 결과로 사용자에게 SSE를 쏨
+
+#### ✅ [6-3] 비동기 메세징 전달
+
+- Rabbit MQ로 설정
+- Code 실행 시 Exchange에 Rabbit MQ 전달
+- Worker 에서 Rabbit MQ exchange subscribe
+- Worker 에서 응답받는 것까지 확인
+
+#### ✅ [6-2] STOMP SSE 적용
+
+- 서버 STOMP 설정
+- Front STOMP 구독
+- 코드 실행 요청 후 STOMP로 응답받기
+
+#### ✅ [6-1] CodeExecution 기본 셋팅
+
+- IDE UI 작성
+- 코드 실행 후 Server로 부터 응답받기
+- Anonymous Filter 적용
+
 ### 5. Security 학습
 
 #### ✅ [5-2] open api Security 적용
