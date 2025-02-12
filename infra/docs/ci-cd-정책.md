@@ -9,9 +9,9 @@
             "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
-              "logs:CreateLogStream",    // CloudWatch 로그 스트림 생성
-              "ecr:*",                   // ECR 모든 권한 (이미지 push/pull 등)
-              "logs:PutLogEvents"        // CloudWatch에 로그 쓰기
+              "logs:CreateLogStream",
+              "ecr:*",
+              "logs:PutLogEvents"
             ],
             "Resource": "*"
         }
@@ -30,7 +30,8 @@
 ---
 
 ### ECS CI/CD 정책
-```json{
+```json
+{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -65,7 +66,7 @@
 }
 ```
 
-> 정책 설명
+> ### 정책 설명
 > - application-autoscaling:Describe*
 >   - 오토스케일링 설정 조회
 > - application-autoscaling:PutScalingPolicy

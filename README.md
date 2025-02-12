@@ -4,6 +4,7 @@
 
 ### 7. Infra 학습
 
+#### ✅ [7-4] [IAM 역할 추가](./infra/docs/IAM-ROLE.md)
 #### ✅ [7-3] [CI/CD 정책 추가](./infra/docs/ci-cd-정책.md)
 #### ✅ [7-2] [Docker 이미지 빌드 및 ECR 등록](./infra/docs/ECR-도커-컨테이너-등록.md)
 #### ✅ [7-1] 멀티 모듈 프로젝트로 헬스체크
