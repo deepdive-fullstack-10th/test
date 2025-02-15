@@ -4,7 +4,17 @@
 
 ### 7. Infra 학습
 
-#### ✅ [7-5] [ECS Task Definition](./infra/docs/ECS-TASK-DEF.md)
+#### ✅ [7-6] [ALB 라우팅 및 Route 53](./infra/docs/ALB.md)
+
+#### ✅ [7-5] [EC2 배포](./infra/docs/EC2-DEPLOY.md)
+
+- [ECS Task Definition](./infra/docs/ECS-TASK-DEF.md)
+  - Fargate로 API 서버 ECS Task 등록
+  - 필요 없어짐. EC2로 배포테스트
+  - SSM Manager, NLB 설정
+- EC2에 생성된 Private RabbitMQ Server로 메세지 큐가 전달되는지 확인
+  - 확인 완료
+
 #### ✅ [7-4] [IAM 역할 추가](./infra/docs/IAM-ROLE.md)
 #### ✅ [7-3] [CI/CD 정책 추가](./infra/docs/ci-cd-정책.md)
 #### ✅ [7-2] [Docker 이미지 빌드 및 ECR 등록](./infra/docs/ECR-도커-컨테이너-등록.md)
