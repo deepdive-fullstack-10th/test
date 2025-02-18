@@ -4,10 +4,17 @@
 
 ### 7. Infra 학습
 
+#### ✅ [7-8] Commit Change Trigger Test
+
+- PR Change Trigger 처리
+- Jacoco Report 결과 처리
+
 #### ✅ [7-7] Jenkins CI 테스트
 
 - 테스트 코드 1줄로 Jenkins에서 CI 진행
-- Discord로 결과 전달 받기
+  - ✅ PR Open Trigger 처리
+  - ✅ Discord로 결과 전달 받기
+  - ✅ PR로 결과 전달 받기
 
 #### ✅ [7-6] [ALB 라우팅 및 Route 53](./infra/docs/ALB.md)
 
