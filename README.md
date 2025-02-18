@@ -4,6 +4,11 @@
 
 ### 7. Infra 학습
 
+#### ✅ [7-7] Jenkins CI 테스트
+
+- 테스트 코드 1줄로 Jenkins에서 CI 진행
+- Discord로 결과 전달 받기
+
 #### ✅ [7-6] [ALB 라우팅 및 Route 53](./infra/docs/ALB.md)
 
 #### ✅ [7-5] [EC2 배포](./infra/docs/EC2-DEPLOY.md)
