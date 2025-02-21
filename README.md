@@ -4,6 +4,9 @@
 
 ### 7. Infra 학습
 
+#### ✅ [7-9] CD Trigger Test
+- 1234
+
 #### ✅ [7-8] Commit Change Trigger Test
 
 - PR Change Trigger 처리
