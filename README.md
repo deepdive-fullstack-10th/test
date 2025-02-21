@@ -2,7 +2,45 @@
 
 ---
 
+### 7. Infra 학습
+
+#### ✅ [7-8] Commit Change Trigger Test
+
+- PR Change Trigger 처리
+- Jacoco Report 결과 처리
+
+#### ✅ [7-7] Jenkins CI 테스트
+
+- 테스트 코드 1줄로 Jenkins에서 CI 진행
+  - ✅ PR Open Trigger 처리
+  - ✅ Discord로 결과 전달 받기
+  - ✅ PR로 결과 전달 받기
+
+#### ✅ [7-6] [ALB 라우팅 및 Route 53](./infra/docs/ALB.md)
+
+#### ✅ [7-5] [EC2 배포](./infra/docs/EC2-DEPLOY.md)
+
+- [ECS Task Definition](./infra/docs/ECS-TASK-DEF.md)
+  - Fargate로 API 서버 ECS Task 등록
+  - 필요 없어짐. EC2로 배포테스트
+  - SSM Manager, NLB 설정
+- EC2에 생성된 Private RabbitMQ Server로 메세지 큐가 전달되는지 확인
+  - 확인 완료
+
+#### ✅ [7-4] [IAM 역할 추가](./infra/docs/IAM-ROLE.md)
+#### ✅ [7-3] [CI/CD 정책 추가](./infra/docs/ci-cd-정책.md)
+#### ✅ [7-2] [Docker 이미지 빌드 및 ECR 등록](./infra/docs/ECR-도커-컨테이너-등록.md)
+#### ✅ [7-1] 멀티 모듈 프로젝트로 헬스체크
+
 ### 6. CodeExecution 학습
+
+#### ✅ [6-12] 요구사항 변경
+
+* Rabbit MQ는 Fargate로 등록될 수 없다. 구독되어야 함.
+  * EC2로 배포하든 생각해야 됨
+* SQS를 사용하는 방식 고려
+* Worker Service Fargate Task 등록 시 DinD 지원 안됨.
+  * Docker Sandbox -> gVisor 로 변경 
 
 #### ✅ [6-11] CPP 코드 실행기 추가
 
