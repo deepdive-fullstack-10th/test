@@ -5,6 +5,7 @@
 ### 7. Infra 학습
 
 #### ✅ [7-9] CD Trigger Test
+
 - 12345325
 
 #### ✅ [7-8] Commit Change Trigger Test
