@@ -4,8 +4,13 @@
 
 ### 7. Infra 학습
 
-#### ✅ [7-9] CD Trigger Test
-- 12345325asdfsadf
+#### ✅ [7-9] CD Test
+
+- Trigger Test
+- S3 Upload Test
+- Deploy Test
+- Discord Notification Test
+- Last CI/CD Test
 
 #### ✅ [7-8] Commit Change Trigger Test
 
